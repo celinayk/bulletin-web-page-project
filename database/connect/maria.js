@@ -1,6 +1,6 @@
 const maria = require('mysql');
 
-const conn = maria.createConnection({
+const connection = maria.createConnection({
     host: 'localhost',
     port: 3306,
     user: 'yeonkyung',
@@ -8,4 +8,14 @@ const conn = maria.createConnection({
     database: 'bulletinboard'
 });
 
-module.exports = conn;
+/*
+connection.connect((err) => {
+  if (err) {
+    console.error('Error connecting to MariaDB: ', err);
+  } else {
+    console.log('Connected to MariaDB');
+  }
+});
+*/
+
+module.exports = connection;

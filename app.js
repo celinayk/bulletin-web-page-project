@@ -23,13 +23,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//라우터 연결 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+/* maria require */ 
+//const maria = require('../database/connect/maria');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
 
 // error handler
 app.use(function(err, req, res, next) {
