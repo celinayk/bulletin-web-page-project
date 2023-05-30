@@ -8,4 +8,5 @@ const conn = maria.createConnection({
     database: 'bulletinboard'
 });
 
+
 module.exports = conn;

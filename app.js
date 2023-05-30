@@ -26,6 +26,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+/* maria require */ 
+//const maria = require('../database/connect/maria');
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
