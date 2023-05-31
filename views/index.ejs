@@ -7,5 +7,29 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+    <table>
+      <tr>
+        <td>번호</td>
+        <td>제목</td>
+        <td>내용</td>
+        <td>작성자</td>
+        <td>등록일</td>
+        <td>조회수</td>
+      </tr>
+      <%
+      for(var i=0; i<rows.length; i++)  
+      {
+      %>
+      <tr>
+        <td><%= rows[i].board_id %></td>
+        <td><%= rows[i].title %></td>
+        <td><a href="/read/<%=rows[i].board_id%>"><%= rows[i].content %></a></td>
+        <td><%= rows[i].writer %></td>
+        <td><%= rows[i].regdate %></td>
+        <td><%= rows[i].viewcnt %></td>
+      </tr>
+      <%} %>
+      <a href="/write">글쓰기</a>
+    </table>
   </body>
 </html>

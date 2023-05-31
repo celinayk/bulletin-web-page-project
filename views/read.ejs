@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+<body>
+  <h1><%= title %></h1>
+  <p>Welcome to <%= title %></p>
+  <form action="/index/read" method="post">
+    <table border="1">
+    <input type="hidden", name="board_id" values="<%=rows.board_id%>"/>
+  
+
+    <tr>
+      <td>번호</td>
+      <td><input type="text" name="board_id" id="board_id" value="<%=rows.board_id%>" required/ ></td>
+    </tr>
+
+    <tr>
+      <td>제목</td>
+      <td><input type="text" name="title" id="title" value="<%=rows.title%>" required/ ></td>
+    </tr>
+
+    <tr>
+      <td>작성자</td>
+      <td><input type="text" name="writer" id="writer" value="<%=rows.writer%>" required/ ></td>
+    </tr>
+
+    <tr>
+      <td>등록일</td>
+      <td><%=rows.regdate%></td>
+    <tr>
+      <td>상세내용</td>
+      <td><input type="text" name="content" id="content" value="<%=rows.content%>" required/ ></td>
+    </tr>
+  </table>
+  </form>
+</body>  
+</html>
