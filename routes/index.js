@@ -38,9 +38,23 @@ router.get('/list/:page', function(req, res, next) {
     if(err) {
       console.log("err : " + err);
     }
-    res.render('index.ejs', { title: '게시판 리스트', rows: rows });
+    res.render('index.ejs', {title : '글목록', rows:rows, page:page, length:rows.length-1, page_num:10, pass:true});
+    console.log(rows.length-1);
   });
 }); 
+
+/* GET 게시물 페이징 조회 */
+router.get('/page/:page', function(req, res, next) {
+  var page = req.params.page;
+  var sql = "select board_id, title, content, writer,date_format(regdate,'%Y-%m-%d %H:%i:%s') regdate, viewcnt from board ";
+  connection.query(sql, function(err, rows) {
+    if(err) {
+      console.log("err : " + err);
+    }
+    res.render('page.ejs', {title : '글목록', rows:rows, page:page, length:rows.length-1, page_num:10, pass:true});
+    console.log(rows.length-1);
+  });
+});
 
 
 /* GET 게시물 상세 조회  */
@@ -76,6 +90,27 @@ router.post('/write', function(req, res, next) {
       console.log("err : " + err);
     }
     res.redirect('/list')
+  });
+});
+
+/* 삭제 */
+router.post('/delete', function(req, res, next) {
+  var board_id = req.body.board_id;
+
+  console.log(req.body.board_id); // 추가된 코드
+
+  var sql="delete from board where board_id= ?";
+  connection.query(sql, board_id, function(err, result) {
+    if (err) {
+      console.log(err);
+      throw err; // 예외 처리를 위해 오류를 다시 던집니다.
+    }
+    if (result.affectedRows === 0) {
+      res.send("<script>alert('일치하는 게시글이 없습니다.');history.back();</script>");
+    }
+    else {
+      res.redirect('/list');
+    }
   });
 });
 

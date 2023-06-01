@@ -7,11 +7,10 @@
 <body>
   <h1><%= title %></h1>
   <p>Welcome to <%= title %></p>
-  <form action="/index/read" method="post">
+  <form action="/delete" method="post">
     <table border="1">
-    <input type="hidden", name="board_id" values="<%=rows.board_id%>"/>
+    <input type="hidden", name="board_id" value="<%=rows.board_id%>"/>
   
-
     <tr>
       <td>번호</td>
       <td><input type="text" name="board_id" id="board_id" value="<%=rows.board_id%>" required/ ></td>
@@ -34,6 +33,12 @@
       <td>상세내용</td>
       <td><input type="text" name="content" id="content" value="<%=rows.content%>" required/ ></td>
     </tr>
+    <tr>
+      <td colspan="2">
+          <button type="submit">글 삭제</button>
+          <a href="/list">목록</a>
+      </td>
+  </tr>
   </table>
   </form>
 </body>  

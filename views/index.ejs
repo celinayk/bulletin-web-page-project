@@ -1,35 +1,50 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <table>
-      <tr>
-        <td>번호</td>
-        <td>제목</td>
-        <td>내용</td>
-        <td>작성자</td>
-        <td>등록일</td>
-        <td>조회수</td>
-      </tr>
-      <%
-      for(var i=0; i<rows.length; i++)  
-      {
-      %>
-      <tr>
-        <td><%= rows[i].board_id %></td>
-        <td><%= rows[i].title %></td>
-        <td><a href="/read/<%=rows[i].board_id%>"><%= rows[i].content %></a></td>
-        <td><%= rows[i].writer %></td>
-        <td><%= rows[i].regdate %></td>
-        <td><%= rows[i].viewcnt %></td>
-      </tr>
-      <%} %>
-      <a href="/write">글쓰기</a>
-    </table>
-  </body>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body>
+<h1><%= title %></h1>
+<a href="/write">글쓰기</a>
+<table border="1">
+    <tr>
+      <td>번호</td>
+      <td>제목</td>
+      <td>내용</td>
+      <td>작성자</td>
+      <td>등록일</td>
+      <td>조회수</td>
+    </tr>
+    <%
+    for(var i = (page * page_num) - page_num; i < (page * page_num); i++) {
+    if(i > length){
+        i++;
+    }else{
+        var data = rows[i]
+    %>
+    <tr>
+        <td><%= data.board_id %></td>
+        <td><%= data.title %></td>
+        <td><a href="/read/<%=data.board_id%>"><%= data.content %></a></td>
+        <td><%= data.writer %></td>
+        <td><%= data.regdate%></td>
+        <td><%= data.viewcnt%></td>
+    </tr>
+    <% }
+    }
+    %>
+    <tr>
+        <td colspan="6">
+            <%
+            for(var j = 0; j < rows.length / page_num; j++){
+            %>
+            [<a href="/list/<%= j+1 %>"><%= j + 1 %></a>]
+            <%
+            }
+            %>
+        </td>
+    </tr>
+</table>
+</body>
 </html>
