@@ -43,18 +43,7 @@ router.get('/list/:page', function(req, res, next) {
   });
 }); 
 
-/* GET 게시물 페이징 조회 */
-router.get('/page/:page', function(req, res, next) {
-  var page = req.params.page;
-  var sql = "select board_id, title, content, writer,date_format(regdate,'%Y-%m-%d %H:%i:%s') regdate, viewcnt from board ";
-  connection.query(sql, function(err, rows) {
-    if(err) {
-      console.log("err : " + err);
-    }
-    res.render('page.ejs', {title : '글목록', rows:rows, page:page, length:rows.length-1, page_num:10, pass:true});
-    console.log(rows.length-1);
-  });
-});
+
 
 
 /* GET 게시물 상세 조회  */
