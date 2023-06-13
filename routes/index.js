@@ -140,7 +140,7 @@ router.post('/delete', function(req, res, next) {
       return;
     }
 
-    // 게시글 삭제
+    // 게시글 삭제!!
     var deleteBoardSql = "DELETE FROM board WHERE board_id=?";
     connection.query(deleteBoardSql, [parseInt(board_id)], function(err, result) {
       if (err) {
@@ -153,8 +153,6 @@ router.post('/delete', function(req, res, next) {
   });
 });
 
-
-      
 
 
 
