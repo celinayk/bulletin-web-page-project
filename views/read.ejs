@@ -38,8 +38,51 @@
           <button type="submit">글 삭제</button>
           <a href="/list">목록</a>
       </td>
-  </tr>
+    </tr>
   </table>
   </form>
+
+
+    <h2>댓글</h2>
+    <table border="1">
+      <% for (let i = 0; i < replies.length; i++) { %>
+      <tr>
+        
+        <td><%= replies[i].reply_writer %></td>
+        <td><%= replies[i].reply_content %></td>
+        <td><%= replies[i].reply_regdate %></td>
+        <td>
+          <form action="/deleteReply" method="post">
+            <input type="hidden" name="board_id" value="<%= rows.board_id %>">
+            <input type="hidden" name="reply_id" value="<%= replies[i].reply_id %>">
+            <button type="submit">댓글 삭제</button>
+          </form>
+        </td>
+      </tr>
+      <% } %>
+    </table>
+
+  
+  <form action="/read/<%= rows.board_id %>" method="post">
+    <table border="1">
+      <p>Welcome to 댓글쓰기</p>
+      <input type="hidden" name="board_id" value="<%=rows.board_id%>"/>
+      <tr>
+        <td>작성자</td>
+        <td><input type="text" name="reply_writer" id="reply_writer" required/></td>
+      </tr>
+      <tr>
+        <td>내용</td>
+        <td><textarea name="reply_content" id="reply_content" cols="30" rows="10" required></textarea></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button type="submit">댓글쓰기</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+  
+
 </body>  
 </html>
