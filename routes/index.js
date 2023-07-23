@@ -1,11 +1,12 @@
 var express = require('express');
-const { rawListeners } = require('../app');
+//const { rawListeners } = require('../app');
 var router = express.Router();
 var connection = require('../database/connect/maria');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  console.log('get요청이 발생했습니다');
+  res.render('main.ejs', { title: 'Express' });
 });
 
 
