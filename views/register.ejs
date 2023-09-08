@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script   src="https://code.jquery.com/jquery-3.6.0.min.js"   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="   crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>제목</title>
+</head>
+<body>
+  <form action="/register" method="post">
+    <h1>회원가입</h1>
+    <p>
+      <label for="userName">이름
+        <input type="text" name="userName" placeholder="이름을 입력해주세요">
+      </label>
+    </p>
+   
+    <p>
+      <label for="userID">아이디
+        <input type="text" name="userID" placeholder="아이디입력(6~20자)">
+        <button type="button" onclick="checkDuplicateID()">아이디 중복확인</button> 
+    
+      </label>
+    </p>
+   
+    <p>
+      <label for="userPassword">비밀번호
+        <input type="password" name="userPassword" placeholder="비밀번호 입력(문자,숫자,특수문자 포함 8~20자)">
+      </label>
+    </p>
+  
+    <p>
+      <label for="userPassword">비밀번호 확인
+        <input type="password" name="userPassword" placeholder="비밀번호 재입력">
+      </label>
+    </p>
+   
+    <p>
+      <label for="userEmail">이메일
+        <input type="text" name="userEmail" id="userEmail">@
+        <input type="text" name="email_dns" id="email_dns">
+        <select name="email_sel" id="email_sel" onchange="updateEmailDomain()"">
+          <option value="">직접 입력</option>
+          <option value="naver.com">NAVER</option>
+          <option value="hanmail.net">DAUM</option>
+          <option value="gmail.com">GOOGLE</option>
+        </select>
+      </label>
+    </p>   
+    <input type="submit" value="회원가입하기">
+
+    <script>
+      //아이디 중복 체크 함수 
+  function checkDuplicateID() {
+    const userID = $("input[name='userID']").val(); 
+
+    if (!userID) {
+      alert("아이디를 입력하세요.");
+      return;
+    }
+  
+    //AJAX를 이용해서 서버에 아이디 중복 체크 요청 보냄 
+    $.ajax({
+      type : 'post',
+      url : '/register', //요청할 서버 url
+      async : true, //비동기화 여부 
+      data : {userID}, //요청할 때 보낼 데이터 
+      dataType: 'json', 
+      success : function(response) {
+     
+        if(response.isDuplicate) {
+          alert("중복된 아이디입니다. 다른 아이디를 입력해주세요.");
+        }
+        else {
+          alert("사용 가능한 아이디입니다.");
+        }
+      },
+      error: function(xhr, satus, error) {
+        console.error("AJAX 요청 실패:", error);
+      }
+    });
+  }
+     </script>
+
+     <script>
+      function updateEmailDomain() {
+        var selectElement = document.getElementById("email_sel");
+        var emailDomain = selectElement.value;
+        var emailDomaInput = document.getElementById("email_dna");
+        emilDomainInput.value=emailDomain;
+      }
+     </script>
+
+     <script>
+      // 회원가입 정보 전송
+      $(document).ready(function() {
+        $("form").submit(function(event) {
+          event.preventDefault();
+          const formData = {
+            userName: $("input[name='userName']").val(),
+            userID: $("input[name='userID']").val(),
+            userPassword: $("input[name='userPassword']").val(),
+            userEmail: $("input[name='userEmail']").val(),
+            email_dns: $("select[name='email_sel']").val() || $("input[name='email_dns']").val()
+          };
+    
+          $.ajax({
+            type: "POST",
+            url: "/register",
+            data: formData,
+            success: function(response) {
+              alert("회원가입이 완료되었습니다.");
+              window.location.href = "/login"; // 회원가입 성공 시 로그인 페이지로 이동
+            },
+            error: function(xhr, status, error) {
+              console.error("AJAX 요청 실패:", error);
+              alert("회원가입 중 오류가 발생했습니다.");
+            }
+          });
+        });
+      });
+    </script>
+    
+  </form>  
+  
+  
+ 
+   
+</body>
+</html>

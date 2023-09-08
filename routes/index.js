@@ -3,11 +3,74 @@ var express = require('express');
 var router = express.Router();
 var connection = require('../database/connect/maria');
 
-/* GET home page. */
+/* GET home page.메인화면, 로그인화면  */
 router.get('/', function(req, res, next) {
-  console.log('get요청이 발생했습니다');
   res.render('main.ejs', { title: 'Express' });
 });
+
+router.post('/', function(req, res, next) {
+  var { userID, userPassword } = req.body;
+
+  // 데이터베이스에서 사용자 정보 조회
+  var query = `SELECT * FROM user WHERE userID = ? AND userPassword = ?`;
+  connection.query(query, [userID, userPassword], function(err, results) {
+    if (err) {
+      console.error('Database error:', err);
+      return res.status(500).send('데이터베이스 오류');
+    }
+
+    if (results.length > 0) {
+      console.log("로그인 성공 ! 꺄~~")
+      res.redirect('/list');
+    } else {
+      res.status(401).send('로그인 실패');
+    }
+  });
+});
+
+//회원가입 기능 
+router.get('/register',function(req, res, next) {
+  res.render('register.ejs', {title: "회원가입하기"});
+});
+
+
+router.post('/register', function(req, res, next) {
+  console.log(req.body); 
+  
+  var userID = req.body.userID;
+  var userPassword = req.body.userPassword;
+  var userName = req.body.userName;
+  var userEmail = req.body.userEmail;
+  var email_dns = req.body.email_dns;
+
+  // 아이디 중복 여부 확인
+  var checkDuplicateSQL = "SELECT COUNT(*) AS count FROM user WHERE userID=?";
+  connection.query(checkDuplicateSQL, [userID], function(err, rows) {
+    if (err) {
+      console.error("쿼리 실행 오류임:", err.message);
+      return res.status(500).json({ error: "서버 오류가 발생했습니다." });
+    }
+
+    const count = rows[0].count;
+    const isDuplicate = count > 0;
+
+    if (isDuplicate) {
+      return res.json({ isDuplicate: true }); // 아이디 중복 시 응답
+    } else {
+      // 아이디 중복이 아니면 회원 정보 삽입
+      var insertUserSQL = "INSERT INTO user (userID, userPassword, userName, userEmail) VALUES (?, ?, ?, ?)";
+      connection.query(insertUserSQL, [userID, userPassword, userName, `${userEmail}@${email_dns}`], function(err, result) {
+        if (err) {
+          console.error("쿼리 실행 오류:", err.message);
+          return res.status(500).json({ error: "서버 오류가 발생했습니다." });
+        }
+        return res.json({ success: true }); // 회원 정보 삽입 성공 시 응답
+      });
+    }
+  });
+});
+
+
 
 
 /* GET select경로의 라우터 */ 
