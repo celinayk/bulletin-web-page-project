@@ -11,6 +11,8 @@
 |6|댓글 삭제|- 댓글은 삭제 가능하다.|
 
 동작
+![Animation](https://github.com/celinayk/bulletin-web-page-project/assets/80758099/4593a8e4-19e7-4d77-b505-0390ce6d808c)
+
 
 개발 환경 조건
 RDBMS: MariaDB
@@ -19,5 +21,5 @@ Backend: node.js
 node.js 내에서 SQL을 구현할 것(native한 SQL 사용)
 
 ERD
-
+![스크린샷(246)](https://github.com/celinayk/bulletin-web-page-project/assets/80758099/59918c52-8d49-40da-bbca-e69679b6adf2)
   
